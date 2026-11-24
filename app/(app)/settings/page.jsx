@@ -1,5 +1,4 @@
 "use client";
-import DashboardLayout from "@/components/DashboardLayout";
 import { useState } from "react";
 
 export default function SettingsPage() {
@@ -15,7 +14,6 @@ export default function SettingsPage() {
     };
 
     return (
-        <DashboardLayout>
             <div className="space-y-6">
                 {/* Header */}
                 <div>
@@ -145,7 +143,6 @@ export default function SettingsPage() {
                     </div>
                 </div>
             </div>
-        </DashboardLayout>
     );
 }
 

@@ -6,6 +6,9 @@ import { useSignupMutation } from "@/store/api/authApi";
 import { setCredentials } from "@/store/slices/authSlice";
 import Link from "next/link";
 
+// Toggle off once a real backend is wired up
+const USE_MOCK_SIGNUP = true;
+
 export default function SignupPage() {
     const [formData, setFormData] = useState({
         name: "",
@@ -14,10 +17,12 @@ export default function SignupPage() {
         confirmPassword: "",
     });
     const [error, setError] = useState("");
+    const [mockLoading, setMockLoading] = useState(false);
 
     const router = useRouter();
     const dispatch = useDispatch();
-    const [signup, { isLoading }] = useSignupMutation();
+    const [signup, { isLoading: isApiLoading }] = useSignupMutation();
+    const isLoading = isApiLoading || mockLoading;
 
     useEffect(() => {
         // Check if user is already logged in
@@ -41,6 +46,18 @@ export default function SignupPage() {
         // Validate passwords match
         if (formData.password !== formData.confirmPassword) {
             setError("Passwords do not match");
+            return;
+        }
+
+        if (USE_MOCK_SIGNUP) {
+            setMockLoading(true);
+            await new Promise((r) => setTimeout(r, 500));
+            dispatch(setCredentials({
+                user: { name: formData.name, email: formData.email, role: "admin" },
+                token: "mock-token-" + Date.now(),
+            }));
+            setMockLoading(false);
+            router.push("/dashboard");
             return;
         }
 

@@ -1,5 +1,4 @@
 "use client";
-import DashboardLayout from "@/components/DashboardLayout";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "@/store/slices/authSlice";
 
@@ -62,7 +61,6 @@ export default function DashboardPage() {
     ];
 
     return (
-        <DashboardLayout>
             <div className="space-y-6">
                 {/* Welcome message */}
                 <div className="bg-white rounded-lg shadow-md p-6">
@@ -150,7 +148,6 @@ export default function DashboardPage() {
                     </div>
                 </div>
             </div>
-        </DashboardLayout>
     );
 }
 
